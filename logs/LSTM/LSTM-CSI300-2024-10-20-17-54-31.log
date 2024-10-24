@@ -1,0 +1,13 @@
+{'d_feat': 158, 'hidden_size': 256, 'num_layers': 2, 'gate_input_start_index': 158, 'gate_input_end_index': 221}
+CSI300
+
+Loss: MaskedMSELoss
+
+Epoch 1, train_loss 0.982269, valid_loss 0.997812 
+Epoch 1, ic 0.054005, icir 0.417940, ric 0.050603, ricir 0.392474 
+Epoch 2, train_loss 0.957905, valid_loss 1.025816 
+Epoch 2, ic 0.047685, icir 0.461535, ric 0.043927, ricir 0.419311 
+Epoch 3, train_loss 0.917653, valid_loss 1.059700 
+Epoch 3, ic 0.040278, icir 0.391284, ric 0.036191, ricir 0.351424 
+------- Test -----
+{'IC': 0.0540054784168524, 'ICIR': 0.41794040805441124, 'RIC': 0.05060273799668099, 'RICIR': 0.39247362802237923}

@@ -1,0 +1,36 @@
+CSI300:
+  epochs: 40
+  lookback_length: 8
+  steps: 5
+  lr: 0.001
+  alpha: 0.1
+  train_stop_loss_thred: 0.95
+  use_cl: False
+  clip_grad: 3.0
+  batch_size: 800
+  shuffle_train: True
+  model_args:
+    d_feat: 158
+    hidden_size: 256
+    num_layers: 2
+    gate_input_start_index: 158
+    gate_input_end_index: 221
+
+CSI800:
+  epochs: 40
+  lookback_length: 8
+  steps: 5
+  lr: 0.001
+  alpha: 0.1
+  train_stop_loss_thred: 0.95
+  use_cl: False
+  clip_grad: 3.0
+  batch_size: 800
+  shuffle_train: True
+  model_args:
+    d_feat: 158
+    hidden_size: 256
+    num_layers: 2
+    gate_input_start_index: 158
+    gate_input_end_index: 221
+

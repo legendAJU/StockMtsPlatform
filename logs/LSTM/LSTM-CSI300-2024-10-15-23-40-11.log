@@ -1,0 +1,30 @@
+CSI300
+
+Loss: MaskedMSELoss
+
+Epoch 1, train_loss 0.992784, valid_loss 0.985377 
+Epoch 1, ic 0.052396, icir 0.359571, ric 0.047552, ricir 0.322986 
+Epoch 2, train_loss 0.989331, valid_loss 0.984357 
+Epoch 2, ic 0.054533, icir 0.368371, ric 0.048242, ricir 0.323625 
+Epoch 3, train_loss 0.987621, valid_loss 0.984903 
+Epoch 3, ic 0.056070, icir 0.396640, ric 0.049919, ricir 0.349176 
+Epoch 4, train_loss 0.986140, valid_loss 0.985266 
+Epoch 4, ic 0.056116, icir 0.415077, ric 0.050256, ricir 0.366830 
+Epoch 5, train_loss 0.984814, valid_loss 0.986744 
+Epoch 5, ic 0.055703, icir 0.435055, ric 0.050978, ricir 0.392579 
+Epoch 6, train_loss 0.983521, valid_loss 0.986579 
+Epoch 6, ic 0.056496, icir 0.443683, ric 0.051316, ricir 0.397089 
+Epoch 7, train_loss 0.982290, valid_loss 0.986500 
+Epoch 7, ic 0.057772, icir 0.473537, ric 0.052865, ricir 0.426824 
+Epoch 8, train_loss 0.981053, valid_loss 0.989157 
+Epoch 8, ic 0.059015, icir 0.482597, ric 0.055635, ricir 0.452420 
+Epoch 9, train_loss 0.979776, valid_loss 0.988552 
+Epoch 9, ic 0.058151, icir 0.501772, ric 0.054992, ricir 0.470266 
+Epoch 10, train_loss 0.978525, valid_loss 0.989030 
+Epoch 10, ic 0.056931, icir 0.473736, ric 0.052836, ricir 0.437341 
+Epoch 11, train_loss 0.977306, valid_loss 0.990569 
+Epoch 11, ic 0.057464, icir 0.494874, ric 0.054953, ricir 0.472842 
+Epoch 12, train_loss 0.976057, valid_loss 0.989456 
+Epoch 12, ic 0.058575, icir 0.517640, ric 0.055202, ricir 0.482860 
+Early stopping -----
+------- Test -----

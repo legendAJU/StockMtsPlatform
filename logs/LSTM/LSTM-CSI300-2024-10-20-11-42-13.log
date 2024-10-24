@@ -1,0 +1,32 @@
+{'d_feat': 80, 'hidden_size': 256, 'num_layers': 2, 'gate_input_start_index': 80, 'gate_input_end_index': 221}
+CSI300
+
+Loss: MaskedMSELoss
+
+Epoch 1, train_loss 0.994347, valid_loss 0.993032 
+Epoch 1, ic 0.047099, icir 0.412584, ric 0.051322, ricir 0.448166 
+Epoch 2, train_loss 0.992052, valid_loss 0.991554 
+Epoch 2, ic 0.049994, icir 0.475935, ric 0.051627, ricir 0.486357 
+Epoch 3, train_loss 0.990643, valid_loss 0.992170 
+Epoch 3, ic 0.053172, icir 0.543145, ric 0.055100, ricir 0.561583 
+Epoch 4, train_loss 0.989500, valid_loss 0.992628 
+Epoch 4, ic 0.054152, icir 0.565214, ric 0.056610, ricir 0.579503 
+Epoch 5, train_loss 0.988589, valid_loss 0.992945 
+Epoch 5, ic 0.054242, icir 0.582624, ric 0.055478, ricir 0.596285 
+Epoch 6, train_loss 0.987874, valid_loss 0.992421 
+Epoch 6, ic 0.054599, icir 0.587256, ric 0.055187, ricir 0.587719 
+Epoch 7, train_loss 0.987211, valid_loss 0.993673 
+Epoch 7, ic 0.052809, icir 0.576043, ric 0.054878, ricir 0.588127 
+Epoch 8, train_loss 0.986602, valid_loss 0.993679 
+Epoch 8, ic 0.052601, icir 0.578775, ric 0.053859, ricir 0.582096 
+Epoch 9, train_loss 0.986039, valid_loss 0.992566 
+Epoch 9, ic 0.053664, icir 0.583975, ric 0.053733, ricir 0.576670 
+Epoch 10, train_loss 0.985490, valid_loss 0.992430 
+Epoch 10, ic 0.052249, icir 0.561020, ric 0.052551, ricir 0.556424 
+Epoch 11, train_loss 0.985049, valid_loss 0.994644 
+Epoch 11, ic 0.054230, icir 0.599370, ric 0.054984, ricir 0.606226 
+Epoch 12, train_loss 0.984522, valid_loss 0.994837 
+Epoch 12, ic 0.054224, icir 0.596902, ric 0.056060, ricir 0.619599 
+Early stopping -----
+------- Test -----
+{'IC': 0.049994312812584915, 'ICIR': 0.4759348586578545, 'RIC': 0.05162745888947417, 'RICIR': 0.4863569514685822}
