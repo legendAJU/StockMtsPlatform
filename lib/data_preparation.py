@@ -10,18 +10,18 @@ class DataSet(Dataset):
     def __init__(self,name):
         self.name = name.upper()
         if(name == "CSI300"):
-            with open('/home/cseadmin/mz/StockMtsPlatform/data/csi300/csi300_dl_train.pkl', 'rb') as f:
+            with open('../data/csi300/csi300_dl_train.pkl', 'rb') as f:
                 self.train_data = pickle.load(f)
-            with open('/home/cseadmin/mz/StockMtsPlatform/data/csi300/csi300_dl_valid.pkl', 'rb') as f:
+            with open('../data/csi300/csi300_dl_valid.pkl', 'rb') as f:
                 self.valid_data = pickle.load(f)
-            with open('/home/cseadmin/mz/StockMtsPlatform/data/csi300/csi300_dl_test.pkl', 'rb') as f:
+            with open('../data/csi300/csi300_dl_test.pkl', 'rb') as f:
                 self.test_data = pickle.load(f)
         elif(name == "CSI800"):
-            with open('/home/cseadmin/mz/StockMtsPlatform/data/csi800/csi800_dl_train.pkl', 'rb') as f:
+            with open('../data/csi800/csi800_dl_train.pkl', 'rb') as f:
                 self.train_data = pickle.load(f)
-            with open('/home/cseadmin/mz/StockMtsPlatform/data/csi800/csi800_dl_valid.pkl', 'rb') as f:
+            with open('../data/csi800/csi800_dl_valid.pkl', 'rb') as f:
                 self.valid_data = pickle.load(f)
-            with open('/home/cseadmin/mz/StockMtsPlatform/data/csi800/csi800_dl_test.pkl', 'rb') as f:
+            with open('/..data/csi800/csi800_dl_test.pkl', 'rb') as f:
                 self.test_data = pickle.load(f)
         #elif(name == 'NASDAQ'):
     
