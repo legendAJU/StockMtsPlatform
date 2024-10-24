@@ -1,0 +1,6 @@
+data/csi300/csi300_dl_test.pkl
+data/csi300/csi300_dl_train.pkl
+data/csi300/csi300_dl_valid.pkl
+data/csi800/csi800_dl_test.pkl
+data/csi800/csi800_dl_train.pkl
+data/csi800/csi800_dl_valid.pkl
