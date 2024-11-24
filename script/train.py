@@ -27,36 +27,74 @@ def train(model,
         runner, 
         trainset_loader,
         valset_loader,
+        testset_loader,
         optimizer,
         criterion,
-        max_epochs=40,
-        early_stop=10,
-        train_stop_loss_thred=0.95,
+        max_epochs=100,
+        early_stop=100,
         verbose=1,
-        plot=False,
         log=None,
         save=None,
+        savefig=None
 ):
     best_score=np.inf
     wait=0
+    train_loss_list = []
+    val_loss_list = []
+    test_loss_list = []
+    ic_list = []
+    icir_list = []
+    ric_list = []
+    ricir_list = []
+
+    valid_ic_list = []
+    valid_icir_list = []
+    valid_ric_list = []
+    valid_ricir_list = []
+
     for epoch in range(max_epochs):
         train_loss=runner.train_one_epoch(model,trainset_loader,optimizer,criterion)
         val_loss = runner.eval_model(model, valset_loader,criterion)
-        print_log("Epoch %d, train_loss %.6f, valid_loss %.6f " % (epoch+1, train_loss, val_loss),log=log)
+        test_loss = runner.eval_model(model, testset_loader,criterion)
         metrics=test_model(model, runner, testset_loader, log=log)
-        print_log("Epoch %d, ic %.6f, icir %.6f, ric %.6f, ricir %.6f " % (epoch+1, metrics['IC'],metrics['ICIR'],metrics['RIC'],metrics['RICIR']),log=log)
-        if train_loss<train_stop_loss_thred:
-            break
-        if val_loss < best_score:
-            wait=0
-            best_score=val_loss
-            best_state_dict=copy.deepcopy(model.state_dict())
-        else:
-            wait+=1
-            if wait>=early_stop:
-                print_log("Early stopping -----",log=log)
-                break
-    model.load_state_dict(best_state_dict)
+        valid_metrics=test_model(model, runner, valset_loader, log=log)
+
+        train_loss_list.append(train_loss)
+        val_loss_list.append(val_loss)
+        test_loss_list.append(test_loss)
+        ic_list.append(metrics['IC'])
+        icir_list.append(metrics['ICIR'])
+        ric_list.append(metrics['RIC'])
+        ricir_list.append(metrics['RICIR'])
+
+        valid_ic_list.append(valid_metrics['IC'])
+        valid_icir_list.append(valid_metrics['ICIR'])
+        valid_ric_list.append(valid_metrics['RIC'])
+        valid_ricir_list.append(valid_metrics['RICIR'])
+        print_log("Epoch %d, train_loss %.6f, valid_loss %.6f , valid_ic %.6f, valid_icir %.6f, valid_ric %.6f, valid_ricir %.6f, test_loss %.6f, ic %.6f, icir %.6f, ric %.6f, ricir %.6f " % (epoch+1, train_loss, val_loss, valid_metrics['IC'],valid_metrics['ICIR'],valid_metrics['RIC'],valid_metrics['RICIR'], test_loss, metrics['IC'],metrics['ICIR'],metrics['RIC'],metrics['RICIR']),log=log)
+        model_temp_dct = os.path.join(save, f"{epoch}.pt")
+        torch.save(model.state_dict(),model_temp_dct)
+        # if train_loss<train_stop_loss_thred:
+        #     break
+        # if val_loss < best_score:
+        #     wait=0
+        #     best_score=val_loss
+        #     best_state_dict=copy.deepcopy(model.state_dict())
+        # else:
+        #     wait+=1
+        #     if wait>=early_stop:
+        #         print_log("Early stopping -----",log=log)
+        #         break
+    # if savefig:
+    #     plt.plot(range(0, epoch + 1), train_loss_list, "-", label="Train Loss")
+    #     plt.plot(range(0, epoch + 1), val_loss_list, "-", label="Val Loss")
+    #     plt.plot(range(0, epoch + 1), test_loss_list, "-", label="Test Loss")
+    #     plt.title("Epoch-Loss")
+    #     plt.xlabel("Epoch")
+    #     plt.ylabel("Loss")
+    #     plt.legend()
+    #     plt.savefig(savefig)
+    # model.load_state_dict(best_state_dict)
     return model
 
 def test_model(model,runner, testset_loader,log=None):
@@ -76,7 +114,7 @@ if __name__=="__main__":
     parser.add_argument("--cpus", type=int, default=1)
     args = parser.parse_args()
 
-    seed_everything(0)
+    seed_everything(args.seed)
     set_cpu_num(args.cpus)
 
     GPU_ID = args.gpu_num
@@ -94,7 +132,6 @@ if __name__=="__main__":
         cfg = yaml.safe_load(f)
     cfg = cfg[dataset]
 
-
     # -------------------------------- load model -------------------------------- #
 
     model = model_class(**cfg["model_args"]).to(DEVICE)
@@ -111,11 +148,16 @@ if __name__=="__main__":
     log.seek(0)
     log.truncate()
 
+
+    print_log(model_name,log=log)
+    print_log(dataset, log=log)
+    print_log("radom seed %d" % (args.seed),log=log)
+    print_log("GPU %d" % (args.gpu_num),log=log)
+    print_log(cfg, log=log)
+
         
     # ------------------------------- load dataset ------------------------------- #
-    print_log(cfg["model_args"],log=log)
-    print_log(dataset, log=log)
-    trainset_loader,valset_loader,testset_loader = DataSet(dataset).data_loader_select(model_name)(cfg["batch_size"],cfg["shuffle_train"])
+    trainset_loader,valset_loader,testset_loader = DataSet(dataset).data_loader_select(model_name)(cfg["batch_size"],cfg["shuffle_train"],cfg["n_jobs"])
     print_log(log=log)
 
     # --------------------------- set model saving path -------------------------- #
@@ -123,7 +165,11 @@ if __name__=="__main__":
     save_path = f"../saved_models/{model_name}"
     if not os.path.exists(save_path):
         os.makedirs(save_path)
-    save = os.path.join(save_path, f"{model_name}-{dataset}-{now}.pt")
+    save = os.path.join(save_path, f"{model_name}-{dataset}-{now}")
+    if not os.path.exists(save):
+        os.makedirs(save)
+    savefig = os.path.join(log_path, f"{model_name}-{dataset}-{now}.png")
+
 
     # ---------------------- set loss, optimizer, scheduler ---------------------- #
 
@@ -133,7 +179,6 @@ if __name__=="__main__":
         model.parameters(),
         lr=cfg.get("lr", 8e-6)
     )
-    print(cfg.get("lr",8e-6))
 
         # weight_decay=cfg.get("weight_decay", 0),
         # eps=cfg.get("eps", 1e-8),
@@ -156,15 +201,15 @@ if __name__=="__main__":
                 runner, 
                 trainset_loader,
                 valset_loader,
+                testset_loader,
                 optimizer,
                 criterion,
                 max_epochs=cfg.get("epochs", 100),
-                early_stop=cfg.get("early_stop", 10),
-                train_stop_loss_thred=cfg.get("train_stop_loss_thred", 0.95),
+                early_stop=cfg.get("early_stop", 100),
                 verbose=1,
-                plot=False,
                 log=log,
                 save=save,
+                savefig=savefig
                 )
     
     

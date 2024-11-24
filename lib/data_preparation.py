@@ -25,18 +25,18 @@ class DataSet(Dataset):
                 self.test_data = pickle.load(f)
         #elif(name == 'NASDAQ'):
     
-    def load_csi_data(self,shuffle_train):
+    def load_csi_data(self,shuffle_train,n_jobs=1):
         train_loader = init__data_loader(self.train_data,shuffle=shuffle_train,drop_last=True)
         valid_loader = init__data_loader(self.valid_data,shuffle=False,drop_last=True)
         test_loader = init__data_loader(self.test_data,shuffle=False,drop_last=True)
         return train_loader,valid_loader,test_loader
     
-    def load_csi_data_batched(self,batch_size,shuffle_train):
+    def load_csi_data_batched(self,batch_size,shuffle_train,n_jobs=20):
         self.train_data.config(fillna_type="ffill+bfill")  
         self.valid_data.config(fillna_type="ffill+bfill")
         self.test_data.config(fillna_type="ffill+bfill")
-        train_loader = DataLoader(self.train_data, batch_size=batch_size, shuffle=shuffle_train,drop_last=True)
-        valid_loader = DataLoader(self.valid_data, batch_size=batch_size, shuffle=False, drop_last=True)
+        train_loader = DataLoader(self.train_data, batch_size=batch_size, shuffle=shuffle_train,num_workers=n_jobs,drop_last=True)
+        valid_loader = DataLoader(self.valid_data, batch_size=batch_size, shuffle=False, num_workers=n_jobs,drop_last=True)
         test_loader = init__data_loader(self.test_data, shuffle=False,drop_last=True)
         return train_loader, valid_loader,test_loader
 

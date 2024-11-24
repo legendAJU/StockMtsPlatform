@@ -1,36 +1,43 @@
 CSI300:
-  epochs: 40
+  epochs: 200
   lookback_length: 8
   steps: 5
   lr: 0.001
   alpha: 0.1
-  train_stop_loss_thred: 0.95
-  use_cl: False
+  train_stop_loss_thred: 0
+  use_cl: True
   clip_grad: 3.0
   batch_size: 800
   shuffle_train: True
+  n_jobs: 20
+  early_stop: 10
+  loss: 'StockMixerLoss'
   model_args:
     d_feat: 158
     hidden_size: 256
     num_layers: 2
+    dropout: 0.0
     gate_input_start_index: 158
     gate_input_end_index: 221
 
 CSI800:
-  epochs: 40
+  epochs: 200
   lookback_length: 8
   steps: 5
   lr: 0.001
   alpha: 0.1
-  train_stop_loss_thred: 0.95
-  use_cl: False
+  train_stop_loss_thred: 0
+  use_cl: True
   clip_grad: 3.0
   batch_size: 800
   shuffle_train: True
+  n_jobs: 20
+  early_stop: 10
   model_args:
     d_feat: 158
     hidden_size: 256
     num_layers: 2
+    dropout: 0.0
     gate_input_start_index: 158
     gate_input_end_index: 221
 
